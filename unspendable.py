@@ -77,6 +77,31 @@ def generate (prefix_string, name):
     prefixed_name = prefix_string + name 
     padded_prefixed_name = prefixed_name.ljust(34, 'Z')
 
+    # What I really want to do is pad the prefix
+    # name with a small z, but doing it here
+    # seems to give inconsistent results
+    # Padding with a capital Z works
+    # but is not what I want to use
+
+    # EDDDDDDDDDDE11111111111111111Gk54D
+    # FDDDDDDDDDDE111111111111111123L5F2
+    # GDDDDDDDDDDE11111111111111114d4Hd3
+    # HDDDDDDDDDDE11111111111111111U5ouh
+    # JDDDDDDDDDDE11111111111111111LQNJo
+    # KDDDDDDDDDDDzzzzzzzzzzzzzzzzzsdadA
+    # mvDDDDDDDDDDE1111111111111111CW9AV
+
+    # EDDDDDDDDDDDZZZZZZZZZZZZZZZZeMDHXH
+    # FDDDDDDDDDDDZZZZZZZZZZZZZZZZZwwLbi
+    # GDDDDDDDDDDDZZZZZZZZZZZZZZZZcrgkxC
+    # HDDDDDDDDDDDZZZZZZZZZZZZZZZZZpM6E8
+    # JDDDDDDDDDDDZZZZZZZZZZZZZZZZbgYpBG
+    # KDDDDDDDDDDDZZZZZZZZZZZZZZZZd79WxX
+    # mvDDDDDDDDDDDZZZZZZZZZZZZZZZYLf2rF
+
+    # I have had success simply calculating
+    # this elsewhere.  This is a strange bug
+
     # Decode, ignoring (bad) checksum.
     decoded_address = base58_decode(padded_prefixed_name, prefix_bytes)
 

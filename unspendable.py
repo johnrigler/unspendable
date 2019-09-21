@@ -14,6 +14,15 @@ seeds = [ '0','3','5','7','10','12','15','17','20','22','25',
          '103','106','108','111','113','116','118','121',
          '123','126','128','131','134','136','139','141','144' ]
 
+# The seeds aren't perfect, the second character will 
+# sometimes mean that the seed fails, I will
+# have to run this again with a 1 and a z in each
+# case, these seeds were found for AAAA,BBBB,CCCC,DDDD
+# which was a bit arbitrary
+
+# This may also be why the padding messes up at the 
+# end sometimes, and why the original code makes 
+# reference to bad checksums on line 116
 
 def base58_check_encode(b, version):
     d = version + b
@@ -73,15 +82,38 @@ def generate (prefix_string, name):
     prefix_char_seed = int(seeds[seed_ref])
     prefix_bytes = (prefix_char_seed).to_bytes(1, 'big')
 
+
+    # Special Kludge for my favorite dogecoin range
+    # I will come up with something more elegant later
+
+    if (prefix_string == '9s'):
+         prefix_bytes = b'\x16'
+    elif (prefix_string == '9t'):
+         prefix_bytes = b'\x16'
+    elif (prefix_string == '9u'):
+         prefix_bytes = b'\x16'
+    elif (prefix_string == '9v'):
+         prefix_bytes = b'\x16'
+    elif (prefix_string == '9w'):
+         prefix_bytes = b'\x16'
+    elif (prefix_string == '9x'):
+         prefix_bytes = b'\x16'
+    elif (prefix_string == '9y'):
+         prefix_bytes = b'\x16'
+    elif (prefix_string == '9z'):
+         prefix_bytes = b'\x16'
+
     # Pad and prefix.
     prefixed_name = prefix_string + name 
-    partly_padded_prefixed_name = prefixed_name.ljust(30,'z')
-    padded_prefixed_name = partly_padded_prefixed_name.ljust(34, 'Z')
+    partly_padded_prefixed_name = prefixed_name.ljust(28,'z')
+    # partly_padded_prefixed_name = prefixed_name
+    # This seems to work as two sets, see comments below
+    padded_prefixed_name = partly_padded_prefixed_name.ljust(34, 'X')
 
     # What I really want to do is pad the prefix
     # name with a small z, but doing it here
     # seems to give inconsistent results
-    # Padding with a capital Z works
+    # Padding with just a capital Z works
     # but is not what I want to use
 
     # EDDDDDDDDDDE11111111111111111Gk54D

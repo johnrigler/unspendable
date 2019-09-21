@@ -74,7 +74,7 @@ def base58_decode (s, version):
     return data
 
 
-def generate (name, prefix_string , pb):
+def generate (prefix_string , name , pb):
 
     prefix_bytes = b'\x00'
     prefix_bytes = bytes(pb)
@@ -98,8 +98,10 @@ def generate (name, prefix_string , pb):
 
 if __name__ == '__main__':
 
-    name = sys.argv[1]
-    prefix_string = sys.argv[2]
+    prefix = sys.argv[1]
+    name = sys.argv[2]
     pb = int(sys.argv[3])
-    print(generate(name, prefix_string , pb))
+
+
+    print(generate(prefix , name ,  pb))
 

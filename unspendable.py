@@ -59,14 +59,21 @@ def base58_decode (s, version):
 
 def generate (prefix_string, name):
 
+
     first_char = prefix_string[0]
 
-    if first_char == 'm':
-        prefix_bytes = b'\x6f'
+
+    if first_char == 'D':
+        prefix_char_seed = 30
     elif first_char == '1':
-        prefix_bytes = b'\x00'
+        prefix_char_seed = 0
+    elif first_char == 'm':
+        prefix_char_seed = 111 
     else:
         raise Exception('unknown network')
+
+    prefix_bytes = (prefix_char_seed).to_bytes(1, 'big')
+
 
     # Pad and prefix.
     prefixed_name = prefix_string + name 

@@ -1,7 +1,7 @@
-if [[ $CIRCLE_CI == 'true' ]]
+if [[ $CIRCLECI == 'true' ]]
 then
 DIR=/home/circleci/project
 else
 DIR=/root/unspendable
 fi
-/home/circleci/project/unspendable.py D DDDDzzzzzzzzzzzzzzzzzzzzzzzz 30 | grep E4X3tx
+$DIR/unspendable.py D DDDDzzzzzzzzzzzzzzzzzzzzzzzz 30 | grep E4X3tx

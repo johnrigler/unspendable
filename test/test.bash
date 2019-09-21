@@ -9,5 +9,7 @@ CMD=$DIR/unspendable.py
 T=DDDDDDDDDDD
 (
 $CMD 1 $T 
+$CMD 9 $T
 $CMD mv $T 
-) | sum | grep 52725
+$CMD DC $T
+)  | sum | grep 52917

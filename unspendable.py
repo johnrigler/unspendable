@@ -67,24 +67,11 @@ def base58_decode (s, version):
 
 def generate (prefix_string, name):
 
-
+    # Find the prefix_bytes from the first character of the prefix
     first_char = prefix_string[0]
     seed_ref = b58_digits.find(first_char)
-    # print(generate(ps, name , int(keys[index])))
-
-    if first_char == 'D':
-        prefix_char_seed = 30
-    elif first_char == '1':
-        prefix_char_seed = 0
-    elif first_char == 'm':
-        prefix_char_seed = 111 
-    else:
-        raise Exception('unknown network')
-
     prefix_char_seed = int(seeds[seed_ref])
-
     prefix_bytes = (prefix_char_seed).to_bytes(1, 'big')
-
 
     # Pad and prefix.
     prefixed_name = prefix_string + name 
@@ -106,5 +93,4 @@ if __name__ == '__main__':
 
     prefix_string = sys.argv[1]
     name = sys.argv[2]
-    
     print(generate(prefix_string, name))

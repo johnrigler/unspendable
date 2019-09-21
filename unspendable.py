@@ -7,6 +7,14 @@ import binascii
 dhash = lambda x: hashlib.sha256(hashlib.sha256(x).digest()).digest()
 b58_digits = '123456789ABCDEFGHJKLMNPQRSTUVWXYZabcdefghijkmnopqrstuvwxyz'
 
+seeds = [ '0','2','5','7','10','12','15','17','20','22','25',
+         '27','30','32','35','37','40','42','45','48','50',
+         '53','55','58','60','63','65','68','70','73','75',
+         '78','80','83','85','88','91','93','96','98','101',
+         '103','106','108','111','113','116','118','121',
+         '123','126','128','131','134','136','139','141','144' ]
+
+
 def base58_check_encode(b, version):
     d = version + b
     address = d + dhash(d)[:4]

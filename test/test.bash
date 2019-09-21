@@ -7,9 +7,7 @@ fi
 
 CMD=$DIR/unspendable.py
 T=DDDDDDDDDDD
-(
-$CMD 1 $T 
-$CMD 9 $T
-$CMD mv $T 
-$CMD DC $T
-)  | sum | grep 52917
+for X in 1 2 3 4 5 6 7 8 9 A B C D DC E F G H J K mv
+do
+$CMD $X $T 
+done   | sum | grep 48974

@@ -69,7 +69,8 @@ def generate (prefix_string, name):
 
 
     first_char = prefix_string[0]
-
+    seed_ref = b58_digits.find(first_char)
+    # print(generate(ps, name , int(keys[index])))
 
     if first_char == 'D':
         prefix_char_seed = 30
@@ -79,6 +80,8 @@ def generate (prefix_string, name):
         prefix_char_seed = 111 
     else:
         raise Exception('unknown network')
+
+    prefix_char_seed = int(seeds[seed_ref])
 
     prefix_bytes = (prefix_char_seed).to_bytes(1, 'big')
 

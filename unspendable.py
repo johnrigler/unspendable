@@ -75,7 +75,8 @@ def generate (prefix_string, name):
 
     # Pad and prefix.
     prefixed_name = prefix_string + name 
-    padded_prefixed_name = prefixed_name.ljust(34, 'Z')
+    partly_padded_prefixed_name = prefixed_name.ljust(30,'z')
+    padded_prefixed_name = partly_padded_prefixed_name.ljust(34, 'Z')
 
     # What I really want to do is pad the prefix
     # name with a small z, but doing it here

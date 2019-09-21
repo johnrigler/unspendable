@@ -1,3 +1,5 @@
+unspendable_test() {
+
 if [[ $CIRCLECI == 'true' ]]
 then
 DIR=/home/circleci/project
@@ -10,4 +12,5 @@ T=DDxxDDDDDDDDD
 for X in 1 2 3 4 5 6 7 8 9 A B C D DC E F G H J K mv
 do
 $CMD $X $T 
-done   | sum | grep 54717
+done  } 
+unspendable_test | sum | grep 15296 

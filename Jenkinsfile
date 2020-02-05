@@ -1,4 +1,4 @@
-pipeline {
+pipelineTriggers {
   agent master 
   stages {
   stage('Stage 1') {

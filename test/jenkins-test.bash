@@ -14,4 +14,4 @@ unspendable_test
 
 # This should always result in 020203
 
-unspendable_test | sum | grep 02023
+unspendable_test | sum | grep 9902023

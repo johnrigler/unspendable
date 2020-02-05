@@ -11,6 +11,7 @@ pipeline {
   stage('Report to Jira') {
       steps {
           comment_issues()
+        }
     }
   }
 }

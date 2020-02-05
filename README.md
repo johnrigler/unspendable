@@ -36,7 +36,7 @@ without any help.)
 
 => ./unspendable.py DCx "this is the stuff"
 DCxTHiSxiSxTHExSTUFFzzzzzzzzbSG1oo
-
+.
 
 
 

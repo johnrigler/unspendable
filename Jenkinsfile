@@ -1,18 +1,15 @@
 pipeline {
   agent any
   stages {
-  stage('Stage 1') {
+  stage('Test') {
       steps {
         script {
-          sh 'pwd' 
+          sh './test/test.bash
         }
       }
     }
-  stage('Stage 2') {
+  stage('Report to Jira') {
       steps {
-        script {
-          sh 'python -v' 
-          }
           jiraSendBuildInfo site: 'secretbeach.atlassian.net'
       }
     }

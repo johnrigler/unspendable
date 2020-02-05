@@ -17,7 +17,7 @@ pipeline {
 }
 
 void comment_issues() {
-    def issue_pattern = "TEST-\\d+"
+    def issue_pattern = "THRU-\\d+"
 
     // Find all relevant commit ids
     currentBuild.changeSets.each {changeSet ->

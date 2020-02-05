@@ -1,0 +1,7 @@
+test_v2 () 
+{ 
+    cat test_v2.data | while read FIRST REST; do
+        ADDR=$(../unspendable.py $FIRST "$REST");
+        dogecoin-cli validateaddress $ADDR;
+    done
+}

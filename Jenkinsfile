@@ -12,12 +12,8 @@ pipeline {
       steps {
         script {
           sh 'python -v' 
-        }
-        post {
-            always {
-                jiraSendBuildInfo site: 'secretbeach.atlassian.net'
           }
-        }
+          jiraSendBuildInfo site: 'secretbeach.atlassian.net'
       }
     }
   }

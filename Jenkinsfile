@@ -10,9 +10,23 @@ pipeline {
     }
   stage('Report to Jira') {
       steps {
-          jiraComment 'This is a comment from the Pipeline'
-          jiraSendBuildInfo site: 'secretbeach.atlassian.net'
-      }
+          comment_issues()
     }
   }
 }
+
+void comment_issues() {
+    def issue_pattern = "TEST-\\d+"
+
+    // Find all relevant commit ids
+    currentBuild.changeSets.each {changeSet ->
+        changeSet.each { commit ->
+            String msg = commit.getMsg()
+            msg.findAll(issue_pattern).each {
+                // Actually post a comment
+                id -> jiraAddComment idOrKey: id, comment: 'Hi there!'
+            }
+        }
+    }
+}
+

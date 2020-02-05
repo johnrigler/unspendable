@@ -1,6 +1,5 @@
 pipeline {
   agent master 
-  stages {
   stage('Stage 1') {
       steps {
         script {
@@ -19,6 +18,5 @@ pipeline {
           }
         }
       }
-    }
   }
 }

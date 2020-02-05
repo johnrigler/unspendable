@@ -1,5 +1,7 @@
 unspendable_test() {
 
+: ..
+
 if [[ $CIRCLECI == 'true' ]]
 then
 DIR=/home/circleci/project

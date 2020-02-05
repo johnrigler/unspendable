@@ -10,6 +10,7 @@ pipeline {
     }
   stage('Report to Jira') {
       steps {
+          jiraComment 'This is a comment from the Pipeline'
           jiraSendBuildInfo site: 'secretbeach.atlassian.net'
       }
     }

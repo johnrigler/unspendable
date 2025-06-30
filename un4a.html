@@ -1,0 +1,63 @@
+<!doctype html>
+<meta charset="utf-8">
+<script>
+const B58 = '123456789ABCDEFGHJKLMNPQRSTUVWXYZabcdefghijkmnopqrstuvwxyz';
+const IDX = Object.fromEntries([...B58].map((c,i)=>[c,i]));
+const BASE  = 58n ** 6n;          // 58⁶  = 38 068 692 544
+const MOD32 = 2n ** 32n;
+
+/* utils ---------------------------------------------------------- */
+const sha = buf => crypto.subtle.digest('SHA-256', buf).then(b => new Uint8Array(b));
+const toBigInt = bytes => bytes.reduce((n,b)=> (n<<8n) + BigInt(b), 0n);
+function b58ToInt(str){ return [...str].reduce((n,c)=>n*58n + BigInt(IDX[c]), 0n); }
+function intToB58(n, len=6){
+  let out = '';
+  for (let i=0;i<len;i++){ out = B58[n % 58n] + out; n /= 58n; }
+  return out;
+}
+function bytesOf(n, size){
+  const a = [];
+  for(let i=0;i<size;i++){ a.unshift(Number(n & 255n)); n >>= 8n; }
+  return Uint8Array.from(a);
+}
+
+/* fast suffix search --------------------------------------------- */
+async function findSuffixFast(stem28){
+  const a = b58ToInt(stem28);               // big‑int of prefix digits
+  const P  = a * BASE;
+  const Plo = P & (MOD32-1n);
+  const Phi = P >> 32n;
+
+  const results = [];
+  let hashes = 0;
+  const t0 = performance.now();
+
+  for (let t=0; t<=8; t++){
+    const Nhi = Phi + BigInt(t);
+    const chk = await sha(await sha(bytesOf(Nhi,21)));
+    hashes += 2;
+    const chkInt = toBigInt(chk.slice(0,4));
+
+    let base = (chkInt - Plo) & (MOD32-1n);          // (mod 2³²)
+    for (let k=0; ; k++){
+      const s = base + BigInt(k)*MOD32;
+      if (s >= BASE) break;
+      if ( ((Plo + s) >> 32n) !== BigInt(t) ) continue;
+      results.push(intToB58(s,6));
+    }
+  }
+  const dt = ((performance.now()-t0)/1000).toFixed(3);
+  console.log(`done in ${dt}s, ${hashes} SHA‑256 calls`);
+  return results;                       // array of valid 6‑char suffixes
+}
+
+/* demo ------------------------------------------------------------ */
+(async ()=>{
+  const stem = 'DCxSTAYxoUTxTooxLATEzzzzzzzz';
+  console.log('prefix:', stem);
+  const suff = await findSuffixFast(stem);
+  console.log('valid suffixes:', suff);           // includes "YkCq9M"
+  console.log('example full addr:', stem + suff[0]);
+})();
+</script>
+
